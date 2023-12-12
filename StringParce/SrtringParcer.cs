@@ -1,44 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-partial class Program
+﻿namespace StringParce
 {
-    public static int ParseInt(string s)
+    public static class SrtringParcer
     {
-        return WordsToInt(SeparateToWords(s));
-    }
-
-    private static List<string> SeparateToWords(string s)
-    {
-        List<string> words = new List<string>();
-        for (int index = 0, start = 0, stringLen = s.Length; index < stringLen; index++)
+        public static int ParseInt(string s)
         {
-
-            if (!Char.IsLetter(s[index]))
-            {
-                words.Add(s.Substring(start, index - start));
-                start = index + 1;
-            }
-            if (index == stringLen - 1)
-            {
-                words.Add(s.Substring(start));
-            }
+            return WordsToInt(SeparateToWords(s));
         }
-        return words;
-    }
 
-    private static int WordsToInt(List<string> words)
-    {
-        int result = 0, totalResult = 0;
-        for (int i = 0, end = words.Count - 1; i <= end; i++)
+        private static List<string> SeparateToWords(string s)
         {
-            if (nums.ContainsKey(words[i]))
+            List<string> words = new List<string>();
+            for (int index = 0, start = 0, stringLen = s.Length; index < stringLen; index++)
             {
-                int current = nums[words[i]];
+
+                if (!Char.IsLetter(s[index]))
+                {
+                    words.Add(s.Substring(start, index - start));
+                    start = index + 1;
+                }
+                if (index == stringLen - 1)
+                {
+                    words.Add(s.Substring(start));
+                }
+            }
+            return words;
+        }
+
+        private static int WordsToInt(List<string> words)
+        {
+            int result = 0, totalResult = 0;
+            for (int i = 0, end = words.Count - 1; i <= end; i++)
+            {
+                if (nums.ContainsKey(words[i]))
+                {
+                    int current = nums[words[i]];
 
                     switch ((Orders)current)
                     {
@@ -56,12 +51,12 @@ partial class Program
                             result += current;
                             break;
                     }
+                }
             }
+            return result + totalResult;
         }
-        return result + totalResult;
-    }
 
-    private static Dictionary<string, int> nums = new Dictionary<string, int>()
+        private static Dictionary<string, int> nums = new Dictionary<string, int>()
     {
         {"and", 0 },
         {"one",1 },
@@ -99,10 +94,11 @@ partial class Program
         {"millions", 1_000_000},
     };
 
-    private enum Orders
-    {
-        Hundred = 100,
-        Thousand = 1000,
-        Million = 1000_000,
+        private enum Orders
+        {
+            Hundred = 100,
+            Thousand = 1000,
+            Million = 1000_000,
+        }
     }
 }
